@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery_list/groceries_overview/data/repository/groceries_overview_repository.dart';
-import 'package:grocery_list/groceries_overview/view/groceries_overview_page.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:grocery_list/routes/app_pages.dart';
 
-import 'global_bloc_observer.dart';
-import 'groceries_overview/data/providers/grocery_api_provider.dart';
-
-void main() {
-  Bloc.observer = GlobalBlocObserver();
-
-  const groceryApiProvider = GroceryApiProvider();
-  const groceriesOverviewRepository =
-      GroceriesOverviewRepository(groceriesApi: groceryApiProvider);
-
-  runApp(const App(groceriesOverviewRepository: groceriesOverviewRepository));
+Future<void> main() async {
+  await GetStorage.init('GroceryListStorage');
+  initService();
+  runApp(GetMaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      useMaterial3: true,
+    ),
+    initialRoute: AppPages.INITIAL,
+    getPages: AppPages.routes,
+  ));
 }
 
-class App extends StatelessWidget {
-  const App({super.key, required this.groceriesOverviewRepository});
+void initService() async {
+  Get.put<LocalStorageService>(LocalStorageService(), permanent: true);
+}
 
-  final GroceriesOverviewRepository groceriesOverviewRepository;
+class LocalStorageService extends GetxService {
+  final String groceryListContainer = 'GroceryListStorage';
+  final String groceryListKey = 'GroceryListKey';
+  late GetStorage localStorage;
 
-  @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: groceriesOverviewRepository,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          useMaterial3: true,
-        ),
-        home: const GroceriesOverviewPage(),
-      ),
-    );
+  LocalStorageService() {
+    localStorage = GetStorage(groceryListContainer);
+  }
+
+  void init() async {
+    localStorage.writeIfNull(groceryListKey, '');
+  }
+
+  void updateValue(String groceryListJson) {
+    localStorage.write(groceryListKey, groceryListJson);
+  }
+
+  String readGroceryList() {
+    return localStorage.read(groceryListKey);
   }
 }
