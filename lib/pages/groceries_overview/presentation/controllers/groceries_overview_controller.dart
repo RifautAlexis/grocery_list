@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../main.dart';
+import '../../../../core/services/local_storage_service.dart';
 import '../../bloc/groceries_overview_state.dart';
 import '../../data/repository/groceries_overview_repository.dart';
 import '../../models/grocery_overview.dart';
@@ -61,10 +60,7 @@ class GroceriesOverviewController
 
     textFieldAddGroceryController.clear();
 
-    var groceryListJson =
-        jsonEncode(state.groceries.map((e) => e.toJson()).toList());
-
-    localStorageService.updateValue(groceryListJson);
+    _updateLocalGrocery();
   }
 
   void removeItem(
@@ -73,10 +69,7 @@ class GroceriesOverviewController
     state.groceries.removeAt(index);
     refresh();
 
-    var groceryListJson =
-        jsonEncode(state.groceries.map((e) => e.toJson()).toList());
-
-    localStorageService.updateValue(groceryListJson);
+    _updateLocalGrocery();
   }
 
   void incrementQuantity(int index) {
@@ -85,10 +78,7 @@ class GroceriesOverviewController
     state.groceries[index] = updatedElement;
     refresh();
 
-    var groceryListJson =
-        jsonEncode(state.groceries.map((e) => e.toJson()).toList());
-
-    localStorageService.updateValue(groceryListJson);
+    _updateLocalGrocery();
   }
 
   void decrementQuantity(int index) {
@@ -102,6 +92,10 @@ class GroceriesOverviewController
     state.groceries[index] = updatedElement;
     refresh();
 
+    _updateLocalGrocery();
+  }
+
+  void _updateLocalGrocery() {
     var groceryListJson =
         jsonEncode(state.groceries.map((e) => e.toJson()).toList());
 
