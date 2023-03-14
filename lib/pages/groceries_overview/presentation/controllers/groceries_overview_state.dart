@@ -1,4 +1,4 @@
-import '../models/grocery_overview.dart';
+import '../../models/grocery_overview.dart';
 
 enum GroceriesOverviewStatus { initial, loading, success, failure }
 

@@ -3,5 +3,6 @@
 part of 'app_pages.dart';
 
 abstract class Routes {
-  static const HOME = '/groceriesList';
+  static const HOME = '/groceryList';
+  static const RECIPES = '/recipeList';
 }

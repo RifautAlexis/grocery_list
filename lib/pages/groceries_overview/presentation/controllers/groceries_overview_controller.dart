@@ -2,20 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/services/local_storage_service.dart';
-import '../../bloc/groceries_overview_state.dart';
-import '../../data/repository/groceries_overview_repository.dart';
+import 'groceries_overview_state.dart';
 import '../../models/grocery_overview.dart';
 
 class GroceriesOverviewController
     extends StateController<GroceriesOverviewState> {
-  GroceriesOverviewController({required this.groceriesOverviewRepository});
-
-  final GroceriesOverviewRepository groceriesOverviewRepository;
+  GroceriesOverviewController();
 
   final TextEditingController textFieldAddGroceryController =
       TextEditingController();
 
   final LocalStorageService localStorageService = Get.find();
+
+  int bottomNavigationBarIndex = 0;
 
   @override
   void onInit() {
@@ -93,6 +92,11 @@ class GroceriesOverviewController
     refresh();
 
     _updateLocalGrocery();
+  }
+
+  void navigate(int index) {
+    bottomNavigationBarIndex = index;
+    Get.toNamed('/recipeList');
   }
 
   void _updateLocalGrocery() {
