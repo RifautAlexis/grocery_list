@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/services/local_storage_service.dart';
 import 'groceries_overview_state.dart';
@@ -8,9 +7,6 @@ import '../../models/grocery_overview.dart';
 class GroceriesOverviewController
     extends StateController<GroceriesOverviewState> {
   GroceriesOverviewController();
-
-  final TextEditingController textFieldAddGroceryController =
-      TextEditingController();
 
   final LocalStorageService localStorageService = Get.find();
 
@@ -39,27 +35,26 @@ class GroceriesOverviewController
     }
   }
 
-  void addToList(
-    String newGrocery,
-  ) {
+  void afterAddToList() {
+    var groceryListJson = localStorageService.readGroceryList();
+    var jsonDecoded = json.decode(groceryListJson);
+    var groceryListFromStorage = List<GroceryOverview>.from(
+      jsonDecoded.map(
+        (model) => GroceryOverview.fromJson(model),
+      ),
+    );
     if (status.isEmpty) {
       var newState = GetStatus<GroceriesOverviewState>.success(
         GroceriesOverviewState(
-          [
-            GroceryOverview(productName: newGrocery, quantity: 1),
-          ],
+          groceryListFromStorage,
         ),
       );
       change(newState);
     } else {
-      state.groceries
-          .add(GroceryOverview(productName: newGrocery, quantity: 1));
+      state.groceries = groceryListFromStorage;
+
       refresh();
     }
-
-    textFieldAddGroceryController.clear();
-
-    _updateLocalGrocery();
   }
 
   void removeItem(

@@ -13,16 +13,6 @@ class RecipeListPage extends GetView<RecipeListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const CustomBottomNavigationBar(),
-      // appBar: AppBar(
-      //   title: TextField(
-      //     controller: controller.textFieldAddGroceryController,
-      //     decoration: const InputDecoration(
-      //       hintText: 'I.e. : Carrot',
-      //     ),
-      //     onSubmitted: (value) => controller.addToList(value),
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: Center(
         child: Text(navigationControler.bottomNavigationBarIndex.toString()),
       ),

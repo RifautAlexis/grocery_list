@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/controllers/custom_bottom_navigation_bar_controller.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/view/custom_bottom_navigation_bar.dart';
+import '../../../../shared/Widgets/input_add_grocery/presentation/view/input_add_grocery_page.dart';
 import '../../models/grocery_overview.dart';
 import '../controllers/groceries_overview_controller.dart';
 
@@ -13,17 +14,11 @@ class GroceriesOverviewPage extends GetView<GroceriesOverviewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const CustomBottomNavigationBar(),
       appBar: AppBar(
-        title: TextField(
-          controller: controller.textFieldAddGroceryController,
-          decoration: const InputDecoration(
-            hintText: 'I.e. : Carrot',
-          ),
-          onSubmitted: (value) => controller.addToList(value),
-        ),
+        title: InputAddGrocery(callback: () => controller.afterAddToList()),
         centerTitle: true,
       ),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
       body: controller.obx(
         (state) => ListView.builder(
           itemCount: state!.groceries.length,
