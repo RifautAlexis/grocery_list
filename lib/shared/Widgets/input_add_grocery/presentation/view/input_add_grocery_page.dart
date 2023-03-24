@@ -7,6 +7,13 @@ class InputAddGrocery extends GetView<InputAddGroceryController> {
 
   final Function? callback;
 
+  onSubmitted(String value) {
+    controller.addToList(value);
+    if (callback != null) {
+      callback!();
+    }
+  }
+
   @override
   TextField build(BuildContext context) {
     return TextField(
@@ -14,10 +21,7 @@ class InputAddGrocery extends GetView<InputAddGroceryController> {
       decoration: const InputDecoration(
         hintText: 'I.e. : Carrot',
       ),
-      onSubmitted: (value) {
-        controller.addToList(value);
-        callback!();
-      },
+      onSubmitted: (value) => onSubmitted(value),
     );
   }
 }
