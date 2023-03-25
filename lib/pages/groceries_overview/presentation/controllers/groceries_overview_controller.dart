@@ -10,8 +10,6 @@ class GroceriesOverviewController
 
   final LocalStorageService localStorageService = Get.find();
 
-  int bottomNavigationBarIndex = 0;
-
   @override
   void onInit() {
     super.onInit();
@@ -87,11 +85,6 @@ class GroceriesOverviewController
     refresh();
 
     _updateLocalGrocery();
-  }
-
-  void navigate(int index) {
-    bottomNavigationBarIndex = index;
-    Get.toNamed('/recipeList');
   }
 
   void _updateLocalGrocery() {
