@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:grocery_list/pages/create_recipe/presentation/view/create_recipe_page.dart';
 import 'package:grocery_list/pages/recipe_list/presentation/view/recipes_list_page.dart';
 
+import '../pages/create_recipe/bindings/create_recipe_binding.dart';
 import '../pages/groceries_overview/bindings/groceries_overview_binding.dart';
 import '../pages/groceries_overview/presentation/view/groceries_overview_page.dart';
 import '../pages/recipe_list/bindings/recipes_list_binding.dart';
@@ -22,5 +24,10 @@ class AppPages {
       page: () => RecipeListPage(),
       binding: RecipeListBinding(),
     ),
+    GetPage(
+      name: Routes.ADD_RECIPES,
+      page: () => const CreateRecipePage(),
+      binding: CreateRecipeBinding(),
+    )
   ];
 }

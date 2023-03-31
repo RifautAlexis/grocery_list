@@ -5,4 +5,5 @@ part of 'app_pages.dart';
 abstract class Routes {
   static const HOME = '/groceryList';
   static const RECIPES = '/recipeList';
+  static const ADD_RECIPES = '/create-recipe';
 }

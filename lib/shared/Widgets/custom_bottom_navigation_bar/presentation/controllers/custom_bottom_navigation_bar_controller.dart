@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../../../routes/app_pages.dart';
+
 class CustomBottomNavigationBarController extends GetxController {
   int bottomNavigationBarIndex = 0;
 
@@ -8,13 +10,13 @@ class CustomBottomNavigationBarController extends GetxController {
 
     switch (index) {
       case 0:
-        Get.toNamed('/groceryList');
+        Get.toNamed(Routes.HOME);
         break;
       case 1:
-        Get.toNamed('/recipeList');
+        Get.toNamed(Routes.RECIPES);
         break;
       default:
-        Get.toNamed('/groceryList');
+        Get.toNamed(Routes.HOME);
     }
   }
 }
