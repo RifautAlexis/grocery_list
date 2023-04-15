@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../pages/recipe_list/models/recipe.dart';
+import '../../pages/create_recipe/models/recipe.dart';
 import '../../pages/recipe_list/models/recipe_overview.dart';
 
 class HiveDbService extends GetxService {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:grocery_list/pages/recipe_list/models/recipe.dart';
+import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
 import 'package:grocery_list/pages/recipe_list/models/recipe_overview.dart';
 import '../../../../core/services/hive_db_service.dart';
 import '../../../../core/services/local_storage_service.dart';

@@ -26,7 +26,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ADD_RECIPES,
-      page: () => const CreateRecipePage(),
+      page: () => CreateRecipePage(),
       binding: CreateRecipeBinding(),
     )
   ];
