@@ -19,7 +19,7 @@ class HiveDbService extends GetxService {
   }
 
   List<RecipeOverview> getRecipes() {
-    return recipeBox.values.map((e) => RecipeOverview(e.name)).toList();
+    return recipeBox.values.map((e) => RecipeOverview(e.id, e.name)).toList();
   }
 
   Future<void> addRecipe(Recipe newRecipe) async {
@@ -30,8 +30,8 @@ class HiveDbService extends GetxService {
     await recipeBox.addAll(newRecipes);
   }
 
-  Future<Recipe> getRecipe(String recipeName) async {
-    return recipeBox.values.firstWhere((element) => element.name == recipeName);
+  Future<Recipe> getRecipe(int id) async {
+    return recipeBox.values.firstWhere((element) => element.id == id);
   }
 
   @override

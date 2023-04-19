@@ -127,8 +127,8 @@ class RecipeListController extends StateController<RecipeListState> {
     }
   }
 
-  Future<void> shareRecipe(String recipeName) async {
-    List<Recipe> recipesToCopy = [await hiveDB.getRecipe(recipeName)];
+  Future<void> shareRecipe(int id) async {
+    List<Recipe> recipesToCopy = [await hiveDB.getRecipe(id)];
     var plainText = json.encode(recipesToCopy);
 
     var enCodedJson = utf8.encode(plainText);
@@ -195,5 +195,11 @@ class RecipeListController extends StateController<RecipeListState> {
         buttonPadding: EdgeInsets.zero,
       ),
     );
+  }
+
+  Future<void> removeItem(int id) async {
+    Recipe reciveToDelete = await hiveDB.getRecipe(id);
+    await reciveToDelete.delete();
+    fetchData();
   }
 }

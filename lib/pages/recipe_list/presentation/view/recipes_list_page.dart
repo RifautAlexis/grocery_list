@@ -54,30 +54,47 @@ class RecipeListPage extends GetView<RecipeListController> {
     int index,
     double height,
   ) =>
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        color: index.isEven ? const Color(0xffeeeeee) : null,
-        height: height,
-        child: Row(
-          children: [
-            Text(item.name),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () => print('DELETED'),
-                    icon: const Icon(Icons.delete),
-                  ),
-                  IconButton(
-                    onPressed: () => controller.shareRecipe(item.name),
-                    icon: const Icon(Icons.share),
-                  ),
-                ],
+      Dismissible(
+        key: UniqueKey(),
+        background: Container(
+          alignment: AlignmentDirectional.centerEnd,
+          color: Colors.red,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 5.0),
+            child: Container(
+              width: 30.0,
+              height: 30.0,
+              decoration: const BoxDecoration(
+                color: Color(0xffEEEEEE),
+                shape: BoxShape.circle,
               ),
+              child: const Icon(Icons.delete),
             ),
-          ],
+          ),
+        ),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) => controller.removeItem(item.id),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          color: index.isEven ? const Color(0xffeeeeee) : null,
+          height: height,
+          child: Row(
+            children: [
+              Text(item.name),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () => controller.shareRecipe(item.id),
+                      icon: const Icon(Icons.share),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }

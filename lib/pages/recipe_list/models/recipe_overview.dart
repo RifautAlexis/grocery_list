@@ -1,5 +1,6 @@
 class RecipeOverview {
+  final int id;
   final String name;
 
-  RecipeOverview(this.name);
+  RecipeOverview(this.id, this.name);
 }
