@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 
+import '../../models/ingredient.dart';
 import '../../models/recipe.dart';
 import '../controller/create_recipe_controller.dart';
 

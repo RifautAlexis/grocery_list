@@ -5,6 +5,7 @@ import 'package:grocery_list/core/services/hive_db_service.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/ingredients_form.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/preview_form.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/steps_form.dart';
+import '../../models/ingredient.dart';
 import '../../models/recipe.dart';
 
 class CreateRecipeController extends GetxController
@@ -71,10 +72,11 @@ class CreateRecipeController extends GetxController
     }
 
     var newRecipe = Recipe(
-      name$.value,
-      steps$.value,
-      ingredients$.value,
-      tags$.value,
+      id: UniqueKey().hashCode,
+      name: name$.value,
+      steps: steps$.value,
+      ingredients: ingredients$.value,
+      tags: tags$.value,
     );
 
     await hiveDB.addRecipe(newRecipe);
@@ -108,7 +110,7 @@ class CreateRecipeController extends GetxController
       return;
     }
 
-    ingredients$.add(Ingredient(newValue, 1));
+    ingredients$.add(Ingredient(name: newValue, quantity: 1));
     ingredientEditingController.clear();
   }
 
@@ -138,7 +140,7 @@ class CreateRecipeController extends GetxController
   void incrementQuantity(int index) {
     var ingredient = ingredients$.value[index];
     ingredients$.value[index] =
-        Ingredient(ingredient.name, ingredient.quantity + 1);
+        Ingredient(name: ingredient.name, quantity: ingredient.quantity + 1);
 
     ingredients$.refresh();
   }
@@ -151,7 +153,7 @@ class CreateRecipeController extends GetxController
 
     var ingredient = ingredients$.value[index];
     ingredients$.value[index] =
-        Ingredient(ingredient.name, ingredient.quantity - 1);
+        Ingredient(name: ingredient.name, quantity: ingredient.quantity - 1);
 
     ingredients$.refresh();
   }

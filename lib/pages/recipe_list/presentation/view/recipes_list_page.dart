@@ -23,6 +23,11 @@ class RecipeListPage extends GetView<RecipeListController> {
       ),
       appBar: AppBar(
         title: const InputAddGrocery(),
+        actions: [
+          IconButton(
+              onPressed: () => controller.openRecipeImporter(),
+              icon: Icon(Icons.download))
+        ],
         centerTitle: true,
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
@@ -64,6 +69,10 @@ class RecipeListPage extends GetView<RecipeListController> {
                   IconButton(
                     onPressed: () => print('DELETED'),
                     icon: const Icon(Icons.delete),
+                  ),
+                  IconButton(
+                    onPressed: () => controller.shareRecipe(item.name),
+                    icon: const Icon(Icons.share),
                   ),
                 ],
               ),

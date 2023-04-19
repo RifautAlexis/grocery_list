@@ -26,6 +26,14 @@ class HiveDbService extends GetxService {
     await recipeBox.add(newRecipe);
   }
 
+  Future<void> addRecipes(List<Recipe> newRecipes) async {
+    await recipeBox.addAll(newRecipes);
+  }
+
+  Future<Recipe> getRecipe(String recipeName) async {
+    return recipeBox.values.firstWhere((element) => element.name == recipeName);
+  }
+
   @override
   Future<void> onClose() async {
     super.onClose();

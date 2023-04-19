@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:grocery_list/pages/create_recipe/models/ingredient.dart';
 import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
 import 'package:grocery_list/routes/app_pages.dart';
 import 'package:hive_flutter/hive_flutter.dart';
