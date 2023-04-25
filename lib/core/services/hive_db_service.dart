@@ -1,21 +1,34 @@
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../pages/create_recipe/models/ingredient.dart';
 import '../../pages/create_recipe/models/recipe.dart';
+import '../../pages/grocery_list/models/grocery.dart';
 import '../../pages/recipe_list/models/recipe_overview.dart';
 
 class HiveDbService extends GetxService {
   HiveDbService() {
-    recipeBox = Hive.box('recipes');
+    // init();
   }
 
-  // late LazyBox<Recipe> recipeBox;
   late Box<Recipe> recipeBox;
+  late Box<Grocery> groceryBox;
 
-  Future<void> init() async {
-    // recipeBox = await Hive.openLazyBox<Recipe>('recipe');
-    // recipeBox = await Hive.openBox<Recipe>('recipes');
+  Future<HiveDbService> init() async {
+    await Hive.initFlutter();
+    await Hive.deleteFromDisk();
+    await Hive.deleteBoxFromDisk('recipes');
+    await Hive.deleteBoxFromDisk('groceries');
+    Hive.registerAdapter<Grocery>(GroceryAdapter());
+    Hive.registerAdapter<Recipe>(RecipeAdapter());
+    Hive.registerAdapter<Ingredient>(IngredientAdapter());
+    await Hive.openBox<Recipe>('recipes');
+    await Hive.openBox<Grocery>('groceries');
+
+    recipeBox = Hive.box<Recipe>('recipes');
+    groceryBox = Hive.box<Grocery>('groceries');
+
+    return this;
   }
 
   List<RecipeOverview> getRecipes() {
@@ -37,6 +50,8 @@ class HiveDbService extends GetxService {
   @override
   Future<void> onClose() async {
     super.onClose();
+    await groceryBox.compact();
+    await groceryBox.close();
     await recipeBox.compact();
     await recipeBox.close();
   }

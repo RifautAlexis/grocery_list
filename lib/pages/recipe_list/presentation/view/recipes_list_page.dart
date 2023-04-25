@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_list/routes/app_pages.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/controllers/custom_bottom_navigation_bar_controller.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/view/custom_bottom_navigation_bar.dart';
-import '../../../../shared/Widgets/input_add_grocery/presentation/view/input_add_grocery_page.dart';
 import '../../models/recipe_overview.dart';
 import '../controllers/recipes_list_controller.dart';
 
@@ -22,11 +20,11 @@ class RecipeListPage extends GetView<RecipeListController> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const InputAddGrocery(),
+        title: const Text("Add A Search Bar Here"),
         actions: [
           IconButton(
               onPressed: () => controller.openRecipeImporter(),
-              icon: Icon(Icons.download))
+              icon: const Icon(Icons.download))
         ],
         centerTitle: true,
       ),
@@ -86,6 +84,10 @@ class RecipeListPage extends GetView<RecipeListController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    IconButton(
+                      onPressed: () => controller.addIngredients(item.id),
+                      icon: const Icon(Icons.shopping_basket),
+                    ),
                     IconButton(
                       onPressed: () => controller.shareRecipe(item.id),
                       icon: const Icon(Icons.share),

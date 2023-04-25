@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
-import 'package:grocery_list/pages/recipe_list/models/recipe_overview.dart';
-import 'package:share_plus/share_plus.dart';
 import '../../../../core/services/hive_db_service.dart';
-import '../../../../core/services/local_storage_service.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../create_recipe/models/ingredient.dart';
 import 'recipes_list_state.dart';
@@ -47,7 +43,6 @@ class RecipeListController extends StateController<RecipeListState> {
   void onInit() {
     print("INIT LIST");
     super.onInit();
-    hiveDB.init();
     hiveDB.addRecipe(
       Recipe(
         id: UniqueKey().hashCode,
@@ -198,8 +193,14 @@ class RecipeListController extends StateController<RecipeListState> {
   }
 
   Future<void> removeItem(int id) async {
-    Recipe reciveToDelete = await hiveDB.getRecipe(id);
-    await reciveToDelete.delete();
+    Recipe recipeToDelete = await hiveDB.getRecipe(id);
+    await recipeToDelete.delete();
     fetchData();
+  }
+
+  Future<void> addIngredients(int id) async {
+    Recipe recipe = await hiveDB.getRecipe(id);
+    recipe.ingredients;
+    // hive // TO DO
   }
 }

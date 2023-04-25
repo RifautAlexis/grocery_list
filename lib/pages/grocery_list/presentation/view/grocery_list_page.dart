@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/controllers/custom_bottom_navigation_bar_controller.dart';
 import '../../../../shared/Widgets/custom_bottom_navigation_bar/presentation/view/custom_bottom_navigation_bar.dart';
-import '../../../../shared/Widgets/input_add_grocery/presentation/view/input_add_grocery_page.dart';
-import '../../models/grocery_overview.dart';
-import '../controllers/groceries_overview_controller.dart';
+import '../../models/grocery.dart';
+import '../controllers/grocery_list_controller.dart';
 
-class GroceriesOverviewPage extends GetView<GroceriesOverviewController> {
-  GroceriesOverviewPage({Key? key}) : super(key: key);
+class GroceryListPage extends GetView<GroceryListController> {
+  GroceryListPage({Key? key}) : super(key: key);
 
   final CustomBottomNavigationBarController navigationControler = Get.find();
 
@@ -15,8 +14,13 @@ class GroceriesOverviewPage extends GetView<GroceriesOverviewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: InputAddGrocery(callback: () => controller.afterAddToList()),
-        centerTitle: true,
+        title: TextField(
+          controller: controller.textFieldAddGroceryController,
+          decoration: const InputDecoration(
+            hintText: 'I.e. : Carrot',
+          ),
+          onSubmitted: (value) => controller.afterAddToList(value),
+        ),
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: controller.obx(
@@ -38,7 +42,7 @@ class GroceriesOverviewPage extends GetView<GroceriesOverviewController> {
   }
 
   Widget buildItem(
-    GroceryOverview item,
+    Grocery item,
     int index,
     double height,
   ) =>
@@ -61,28 +65,28 @@ class GroceriesOverviewPage extends GetView<GroceriesOverviewController> {
           ),
         ),
         direction: DismissDirection.endToStart,
-        onDismissed: (direction) => controller.removeItem(index),
+        onDismissed: (direction) => controller.removeGrocery(item),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           color: index.isEven ? const Color(0xffeeeeee) : null,
           height: height,
           child: Row(
             children: [
-              Text(item.productName),
+              Text(item.name),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      onPressed: () => controller.decrementQuantity(index),
+                      onPressed: () => controller.decrementQuantity(item),
                       icon: const Icon(Icons.remove_circle),
                     ),
                     Text(
                       item.quantity.toString(),
                     ),
                     IconButton(
-                      onPressed: () => controller.incrementQuantity(index),
+                      onPressed: () => controller.incrementQuantity(item),
                       icon: const Icon(Icons.add_circle),
                     ),
                   ],
