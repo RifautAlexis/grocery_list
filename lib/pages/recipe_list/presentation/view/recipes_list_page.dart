@@ -20,10 +20,11 @@ class RecipeListPage extends GetView<RecipeListController> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
+        centerTitle: true,
         title: TextField(
           controller: controller.searchInputController,
           decoration: const InputDecoration(
-            hintText: 'I.e. : Tortilla',
+            hintText: "Search on recipe's name or tag",
           ),
         ),
         actions: [
@@ -31,7 +32,6 @@ class RecipeListPage extends GetView<RecipeListController> {
               onPressed: () => controller.openRecipeImporter(),
               icon: const Icon(Icons.download))
         ],
-        centerTitle: true,
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: controller.obx(
