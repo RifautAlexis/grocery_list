@@ -4,6 +4,7 @@ import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
 import 'package:grocery_list/pages/recipe_list/models/recipe_overview.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../create_recipe/models/ingredient.dart';
+import '../../../grocery_list/models/grocery.dart';
 import '../../../grocery_list/presentation/controllers/grocery_list_controller.dart';
 import '../../data/repository/recipe_list_repository.dart';
 import 'recipes_list_state.dart';
@@ -194,8 +195,9 @@ class RecipeListController extends StateController<RecipeListState> {
 
   Future<void> addIngredients(int id) async {
     Recipe recipe = await repository.getRecipe(id);
-    var ingredients = recipe.ingredients;
-    await repository.addToGroceryList(ingredients);
+    var groceries = recipe.ingredients.map((ingredient) =>
+        Grocery(name: ingredient.name, quantity: ingredient.quantity));
+    await repository.addToGroceryList(groceries);
     groceryListController.fetchData();
   }
 

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/new_path_route.dart';
 import 'package:grocery_list/core/services/hive_db_service.dart';
 import 'package:grocery_list/pages/grocery_list/models/grocery.dart';
 
@@ -37,9 +38,19 @@ class RecipeListRepository {
         .toList();
   }
 
-  Future<void> addToGroceryList(List<Ingredient> ingredients) async {
-    var groceries = ingredients.map((ingredient) =>
-        Grocery(name: ingredient.name, quantity: ingredient.quantity));
-    await hiveDbService.groceryBox.addAll(groceries);
+  Future<void> addToGroceryList(Iterable<Grocery> groceries) async {
+    var currentGroceryList = hiveDbService.groceryBox.values;
+    for (var groceryToAdd in groceries) {
+      var identicGrocery = currentGroceryList.firstWhereOrNull((grocery) =>
+          grocery.name.toLowerCase() == groceryToAdd.name.toLowerCase());
+
+      if (identicGrocery == null) {
+        hiveDbService.groceryBox.add(groceryToAdd);
+      } else {
+        var groceryClone = identicGrocery.copyWith(
+            quantity: identicGrocery.quantity + groceryToAdd.quantity);
+        await hiveDbService.groceryBox.put(identicGrocery.key, groceryClone);
+      }
+    }
   }
 }

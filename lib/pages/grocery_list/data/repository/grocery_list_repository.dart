@@ -10,8 +10,8 @@ class GroceryListRepository {
     return hiveDB.groceryBox.values.toList();
   }
 
-  void update(int index, Grocery item) async {
-    await hiveDB.groceryBox.put(index, item);
+  void update(int key, Grocery item) async {
+    await hiveDB.groceryBox.put(key, item);
   }
 
   void add(Grocery item) async {
