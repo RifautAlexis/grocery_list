@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:grocery_list/core/services/hive_db_service.dart';
+import 'package:grocery_list/pages/grocery_list/models/grocery.dart';
 
+import '../../../create_recipe/models/ingredient.dart';
 import '../../../create_recipe/models/recipe.dart';
 import '../../models/recipe_overview.dart';
 
@@ -33,5 +35,11 @@ class RecipeListRepository {
             recipe.tags.any((tag) => tag == searchText))
         .map((e) => RecipeOverview(e.id, e.name))
         .toList();
+  }
+
+  Future<void> addToGroceryList(List<Ingredient> ingredients) async {
+    var groceries = ingredients.map((ingredient) =>
+        Grocery(name: ingredient.name, quantity: ingredient.quantity));
+    await hiveDbService.groceryBox.addAll(groceries);
   }
 }

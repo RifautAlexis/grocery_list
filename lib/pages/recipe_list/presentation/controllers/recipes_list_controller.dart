@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
 import 'package:grocery_list/pages/recipe_list/models/recipe_overview.dart';
-import '../../../../core/services/hive_db_service.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../create_recipe/models/ingredient.dart';
+import '../../../grocery_list/presentation/controllers/grocery_list_controller.dart';
 import '../../data/repository/recipe_list_repository.dart';
 import 'recipes_list_state.dart';
 import 'dart:convert';
@@ -14,6 +14,8 @@ class RecipeListController extends StateController<RecipeListState> {
   RecipeListController();
 
   RecipeListRepository repository = Get.find<RecipeListRepository>();
+  final GroceryListController groceryListController = Get.find();
+
   TextEditingController importerInputController = TextEditingController();
   TextEditingController searchInputController = TextEditingController();
 
@@ -192,8 +194,9 @@ class RecipeListController extends StateController<RecipeListState> {
 
   Future<void> addIngredients(int id) async {
     Recipe recipe = await repository.getRecipe(id);
-    recipe.ingredients;
-    // hive // TO DO
+    var ingredients = recipe.ingredients;
+    await repository.addToGroceryList(ingredients);
+    groceryListController.fetchData();
   }
 
   void search(String searchText) {
