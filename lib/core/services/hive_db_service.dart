@@ -4,13 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../pages/create_recipe/models/ingredient.dart';
 import '../../pages/create_recipe/models/recipe.dart';
 import '../../pages/grocery_list/models/grocery.dart';
-import '../../pages/recipe_list/models/recipe_overview.dart';
 
 class HiveDbService extends GetxService {
-  HiveDbService() {
-    // init();
-  }
-
   late Box<Recipe> recipeBox;
   late Box<Grocery> groceryBox;
 
@@ -29,22 +24,6 @@ class HiveDbService extends GetxService {
     groceryBox = Hive.box<Grocery>('groceries');
 
     return this;
-  }
-
-  List<RecipeOverview> getRecipes() {
-    return recipeBox.values.map((e) => RecipeOverview(e.id, e.name)).toList();
-  }
-
-  Future<void> addRecipe(Recipe newRecipe) async {
-    await recipeBox.add(newRecipe);
-  }
-
-  Future<void> addRecipes(List<Recipe> newRecipes) async {
-    await recipeBox.addAll(newRecipes);
-  }
-
-  Future<Recipe> getRecipe(int id) async {
-    return recipeBox.values.firstWhere((element) => element.id == id);
   }
 
   @override

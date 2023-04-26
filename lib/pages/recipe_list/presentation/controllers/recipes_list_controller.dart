@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_list/pages/create_recipe/models/recipe.dart';
+import 'package:grocery_list/pages/recipe_list/models/recipe_overview.dart';
 import '../../../../core/services/hive_db_service.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../create_recipe/models/ingredient.dart';
+import '../../data/repository/recipe_list_repository.dart';
 import 'recipes_list_state.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -11,8 +13,11 @@ import 'dart:io';
 class RecipeListController extends StateController<RecipeListState> {
   RecipeListController();
 
-  HiveDbService hiveDB = Get.find<HiveDbService>();
+  RecipeListRepository repository = Get.find<RecipeListRepository>();
   TextEditingController importerInputController = TextEditingController();
+  TextEditingController searchInputController = TextEditingController();
+
+  RxString searchInput = ''.obs;
 
   @override
   onReady() {
@@ -43,7 +48,7 @@ class RecipeListController extends StateController<RecipeListState> {
   void onInit() {
     print("INIT LIST");
     super.onInit();
-    hiveDB.addRecipe(
+    repository.addRecipe(
       Recipe(
         id: UniqueKey().hashCode,
         name: "Recipe01",
@@ -60,7 +65,7 @@ class RecipeListController extends StateController<RecipeListState> {
         tags: ["meat", "vegetables", "under 15 mins"],
       ),
     );
-    hiveDB.addRecipe(
+    repository.addRecipe(
       Recipe(
         id: UniqueKey().hashCode,
         name: "Recipe02",
@@ -76,7 +81,7 @@ class RecipeListController extends StateController<RecipeListState> {
         tags: ["meat", "under 30 mins"],
       ),
     );
-    hiveDB.addRecipe(
+    repository.addRecipe(
       Recipe(
         id: UniqueKey().hashCode,
         name: "Recipe03",
@@ -95,13 +100,19 @@ class RecipeListController extends StateController<RecipeListState> {
         tags: ["Vegan", "vegetables"],
       ),
     );
-    // fetch data
+
+    searchInputController.addListener(() {
+      searchInput.value = searchInputController.text;
+    });
+    debounce(searchInput, (searchText) => search(searchText),
+        time: const Duration(seconds: 1));
+
     fetchData();
   }
 
   Future<void> addRecipe() async {
     await Get.toNamed(Routes.ADD_RECIPES);
-    var recipesOverview = hiveDB.getRecipes();
+    var recipesOverview = repository.getRecipes();
     var newState = GetStatus<RecipeListState>.success(
       RecipeListState(recipesOverview),
     );
@@ -110,35 +121,19 @@ class RecipeListController extends StateController<RecipeListState> {
   }
 
   void fetchData() {
-    var recipes = hiveDB.getRecipes();
-    if (recipes.isEmpty) {
-      var newState = GetStatus<RecipeListState>.empty();
-      change(newState);
-    } else {
-      var newState = GetStatus<RecipeListState>.success(
-        RecipeListState(recipes),
-      );
-      change(newState);
-    }
+    var recipes = repository.getRecipes();
+    _refreshData(recipes);
   }
 
   Future<void> shareRecipe(int id) async {
-    List<Recipe> recipesToCopy = [await hiveDB.getRecipe(id)];
+    List<Recipe> recipesToCopy = [await repository.getRecipe(id)];
     var plainText = json.encode(recipesToCopy);
 
     var enCodedJson = utf8.encode(plainText);
     var gZipJson = gzip.encode(enCodedJson);
     var base64Json = base64.encode(gZipJson);
 
-    print(base64Json);
     importRecipe(base64Json);
-
-    // Clipboard.setData(ClipboardData(text: base64Json));
-    // await Share.share(
-    //   json.encode(base64Json),
-    //   sharePositionOrigin: const Rect.fromLTRB(0.0, 0.0, 20.0, 100.0),
-    //   // sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-    // );
   }
 
   Future<void> importRecipe(String base64Json) async {
@@ -147,15 +142,12 @@ class RecipeListController extends StateController<RecipeListState> {
       var decodegZipJson = gzip.decode(decodeBase64Json);
       var originalJson = utf8.decode(decodegZipJson);
 
-      print(originalJson);
-
       List<dynamic> decoded = json.decode(originalJson);
-      // print(decoded);
       List<Recipe> newRecipes = List<Recipe>.from(
         decoded.map((x) => Recipe.fromJson(x)),
       );
 
-      hiveDB.addRecipes(newRecipes);
+      repository.addRecipes(newRecipes);
       fetchData();
     } catch (e) {
       print(e);
@@ -173,7 +165,7 @@ class RecipeListController extends StateController<RecipeListState> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextFormField(
+            TextField(
               controller: importerInputController,
               decoration: const InputDecoration(hintText: "Recipe's name"),
             ),
@@ -193,14 +185,31 @@ class RecipeListController extends StateController<RecipeListState> {
   }
 
   Future<void> removeItem(int id) async {
-    Recipe recipeToDelete = await hiveDB.getRecipe(id);
+    Recipe recipeToDelete = await repository.getRecipe(id);
     await recipeToDelete.delete();
     fetchData();
   }
 
   Future<void> addIngredients(int id) async {
-    Recipe recipe = await hiveDB.getRecipe(id);
+    Recipe recipe = await repository.getRecipe(id);
     recipe.ingredients;
     // hive // TO DO
+  }
+
+  void search(String searchText) {
+    var recipes = repository.search(searchText);
+    _refreshData(recipes);
+  }
+
+  void _refreshData(List<RecipeOverview> recipes) {
+    if (recipes.isEmpty) {
+      var newState = GetStatus<RecipeListState>.empty();
+      change(newState);
+    } else {
+      var newState = GetStatus<RecipeListState>.success(
+        RecipeListState(recipes),
+      );
+      change(newState);
+    }
   }
 }

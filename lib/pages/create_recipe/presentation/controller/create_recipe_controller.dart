@@ -5,12 +5,13 @@ import 'package:grocery_list/core/services/hive_db_service.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/ingredients_form.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/preview_form.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/widgets/steps_form.dart';
+import '../../data/repository/create_recipe_repository.dart';
 import '../../models/ingredient.dart';
 import '../../models/recipe.dart';
 
 class CreateRecipeController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  HiveDbService hiveDB = Get.find();
+  CreateRecipeRepository repository = Get.find();
 
   Map<String, Widget> tabs = {
     'Preview': const PreviewForm(),
@@ -79,7 +80,7 @@ class CreateRecipeController extends GetxController
       tags: tags$.value,
     );
 
-    await hiveDB.addRecipe(newRecipe);
+    await repository.addRecipe(newRecipe);
     backToRecipeList();
   }
 
