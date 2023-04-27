@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:grocery_list/pages/grocery_list/data/repository/grocery_list_repository.dart';
 import 'package:grocery_list/pages/grocery_list/presentation/controllers/grocery_list_controller.dart';
 
-import '../../../shared/Widgets/custom_bottom_navigation_bar/presentation/controllers/custom_bottom_navigation_bar_controller.dart';
+import '../../shared/Widgets/custom_bottom_navigation_bar/presentation/controllers/custom_bottom_navigation_bar_controller.dart';
 
 class GroceryListBinding implements Binding {
   @override

@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import 'package:grocery_list/pages/create_recipe/presentation/view/create_recipe_page.dart';
 import 'package:grocery_list/pages/recipe_list/presentation/view/recipes_list_page.dart';
 
-import '../pages/create_recipe/bindings/create_recipe_binding.dart';
-import '../pages/grocery_list/bindings/grocery_list_binding.dart';
+import '../pages/create_recipe/create_recipe_binding.dart';
+import '../pages/grocery_list/grocery_list_binding.dart';
 import '../pages/grocery_list/presentation/view/grocery_list_page.dart';
-import '../pages/recipe_list/bindings/recipes_list_binding.dart';
+import '../pages/recipe_list/recipes_list_binding.dart';
 
 part 'app_routes.dart';
 
