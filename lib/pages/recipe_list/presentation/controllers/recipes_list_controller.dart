@@ -198,6 +198,11 @@ class RecipeListController extends StateController<RecipeListState> {
     var groceries = recipe.ingredients.map((ingredient) =>
         Grocery(name: ingredient.name, quantity: ingredient.quantity));
     await repository.addToGroceryList(groceries);
+    Get.rawSnackbar(
+      message: '${groceries.length} ingredients have been successfully added',
+      snackPosition: SnackPosition.top,
+      backgroundColor: Colors.green,
+    );
     groceryListController.fetchData();
   }
 
