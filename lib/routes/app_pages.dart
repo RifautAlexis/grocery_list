@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
-import 'package:grocery_list/pages/create_recipe/presentation/view/create_recipe_page.dart';
-import 'package:grocery_list/pages/recipe_list/presentation/view/recipes_list_page.dart';
-
-import '../pages/create_recipe/create_recipe_binding.dart';
-import '../pages/grocery_list/grocery_list_binding.dart';
-import '../pages/grocery_list/presentation/view/grocery_list_page.dart';
-import '../pages/recipe_list/recipes_list_binding.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/create_recipe_binding.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/presentation/view/recipe_creation_page.dart';
+import 'package:grocery_list/features/recipe/recipe_list/presentation/view/recipes_list_page.dart';
+import '../features/grocery/grocery_list/grocery_list_binding.dart';
+import '../features/grocery/grocery_list/presentation/view/grocery_list_page.dart';
+import '../features/recipe/recipe_list/recipes_list_binding.dart';
 
 part 'app_routes.dart';
 
@@ -26,8 +25,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ADD_RECIPES,
-      page: () => const CreateRecipePage(),
-      binding: CreateRecipeBinding(),
+      page: () => const RecipeCreationPage(),
+      binding: RecipeCreationBinding(),
     )
   ];
 }

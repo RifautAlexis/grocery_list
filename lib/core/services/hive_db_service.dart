@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/models/ingredient.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/models/recipe.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../../pages/create_recipe/models/ingredient.dart';
-import '../../pages/create_recipe/models/recipe.dart';
-import '../../pages/grocery_list/models/grocery.dart';
+import '../../features/grocery/grocery_list/models/grocery.dart';
 
 class HiveDbService extends GetxService {
   late Box<Recipe> recipeBox;
