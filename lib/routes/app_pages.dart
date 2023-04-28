@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/create_recipe_binding.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/recipe_creation_binding.dart';
 import 'package:grocery_list/features/recipe/recipe_creation/presentation/view/recipe_creation_page.dart';
 import 'package:grocery_list/features/recipe/recipe_list/presentation/view/recipes_list_page.dart';
 import '../features/grocery/grocery_list/grocery_list_binding.dart';
