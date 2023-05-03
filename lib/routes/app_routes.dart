@@ -6,4 +6,5 @@ abstract class Routes {
   static const HOME = '/groceryList';
   static const RECIPES = '/recipeList';
   static const ADD_RECIPES = '/create-recipe';
+  static const RECIPES_DETAILS = '/recipe-details';
 }

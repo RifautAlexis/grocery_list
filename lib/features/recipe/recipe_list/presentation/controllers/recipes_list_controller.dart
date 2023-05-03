@@ -211,6 +211,13 @@ class RecipeListController extends StateController<RecipeListState> {
     _refreshData(recipes);
   }
 
+  void goToDetails(int recipeId) {
+    Get.toNamed(
+      Routes.RECIPES_DETAILS,
+      parameters: {"recipeId": recipeId.toString()},
+    );
+  }
+
   void _refreshData(List<RecipeOverview> recipes) {
     if (recipes.isEmpty) {
       var newState = GetStatus<RecipeListState>.empty();
