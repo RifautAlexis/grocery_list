@@ -7,9 +7,3 @@ class GroceryListState {
 
   List<Grocery> groceries;
 }
-
-class BaseState<Status> {
-  BaseState(this.status);
-
-  Status status;
-}
