@@ -56,7 +56,7 @@ class StepsDetails extends GetView<RecipeDetailsController> {
           vertical: 10.0,
         ),
         color: index.isEven ? const Color(0xffeeeeee) : null,
-        // height: 60.0,
+        height: 60.0,
         child: Row(
           children: [
             Text((index + 1).toString()),
