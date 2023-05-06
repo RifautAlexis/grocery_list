@@ -9,32 +9,34 @@ class PreviewDetails extends GetView<RecipeDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(controller.recipeDetails.name),
-            const SizedBox(
-              height: 25.0,
-            ),
-            Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 10.0,
-              runSpacing: 5.0,
-              direction: Axis.horizontal,
-              children: [
-                ...controller.recipeDetails.tags
-                    .mapIndexed(
-                      (index, tag) => Chip(
-                        label: Text(tag),
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-          ],
+    return Obx(
+      () => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(controller.recipeDetails$.value!.name),
+              const SizedBox(
+                height: 25.0,
+              ),
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 10.0,
+                runSpacing: 5.0,
+                direction: Axis.horizontal,
+                children: [
+                  ...controller.recipeDetails$.value!.tags
+                      .mapIndexed(
+                        (index, tag) => Chip(
+                          label: Text(tag),
+                        ),
+                      )
+                      .toList(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

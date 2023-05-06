@@ -24,7 +24,7 @@ class RecipeDetailsController extends GetxController {
     'Steps': const StepsDetails(),
   };
 
-  late Recipe recipeDetails;
+  final recipeDetails$ = Rxn<Recipe>();
 
   @override
   void onInit() {
@@ -38,10 +38,20 @@ class RecipeDetailsController extends GetxController {
   }
 
   void _fetchData(int recipeId) {
-    recipeDetails = repository.getRecipeDetails(recipeId);
+    var a = repository.getRecipeDetails(recipeId);
+    recipeDetails$.value = a;
   }
 
   void backToRecipeList() {
-    Get.back(closeOverlays: true);
+    Get.back();
+  }
+
+  Future<void> goToEdition(int recipeId) async {
+    await Get.toNamed(
+      Routes.RECIPE_EDIT,
+      parameters: {"recipeId": recipeId.toString()},
+    );
+
+    _fetchData(recipeId);
   }
 }

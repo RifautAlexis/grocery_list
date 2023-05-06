@@ -9,20 +9,23 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return RecipeScaffoldPage(
-      title: Text(controller.recipeDetails.name),
-      leading: IconButton(
-        onPressed: () => controller.backToRecipeList(),
-        icon: const Icon(Icons.arrow_back),
+    return Obx(
+      () => RecipeScaffoldPage(
+        title: Text(controller.recipeDetails$.value!.name),
+        leading: IconButton(
+          onPressed: () => controller.backToRecipeList(),
+          icon: const Icon(Icons.arrow_back),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () =>
+                controller.goToEdition(controller.recipeDetails$.value!.id),
+            icon: const Icon(Icons.edit),
+          )
+        ],
+        bottomNavigationBar: const CustomBottomNavigationBar(),
+        tabs: controller.tabs,
       ),
-      actions: [
-        IconButton(
-          onPressed: () => print("GO TO EDITION"), // controller.goToEdition(),
-          icon: const Icon(Icons.edit),
-        )
-      ],
-      bottomNavigationBar: const CustomBottomNavigationBar(),
-      tabs: controller.tabs,
     );
   }
 }

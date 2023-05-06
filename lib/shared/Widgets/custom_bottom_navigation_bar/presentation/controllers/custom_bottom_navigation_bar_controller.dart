@@ -13,7 +13,7 @@ class CustomBottomNavigationBarController extends GetxController {
         Get.toNamed(Routes.HOME);
         break;
       case 1:
-        Get.toNamed(Routes.RECIPES);
+        Get.toNamed(Routes.RECIPE_LIST);
         break;
       default:
         Get.toNamed(Routes.HOME);

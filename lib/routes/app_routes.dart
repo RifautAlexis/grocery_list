@@ -4,7 +4,8 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   static const HOME = '/groceryList';
-  static const RECIPES = '/recipeList';
-  static const ADD_RECIPES = '/create-recipe';
-  static const RECIPES_DETAILS = '/recipe-details';
+  static const RECIPE_LIST = '/recipeList';
+  static const ADD_RECIPE = '/create-recipe';
+  static const RECIPE_DETAILS = '/recipe-details';
+  static const RECIPE_EDIT = '/recipe-edit';
 }

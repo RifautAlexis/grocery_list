@@ -23,33 +23,7 @@ class RecipeListController extends StateController<RecipeListState> {
   RxString searchInput = ''.obs;
 
   @override
-  onReady() {
-    print("READY LIST");
-    super.onReady();
-    fetchData();
-  }
-
-  @override
-  onClose() {
-    print("CLOSE LIST");
-    super.onClose();
-  }
-
-  @override
-  onStart() {
-    print("START LIST");
-    super.onStart();
-  }
-
-  @override
-  onDelete() {
-    print("DELETE LIST");
-    super.onDelete();
-  }
-
-  @override
   void onInit() {
-    print("INIT LIST");
     super.onInit();
     repository.addRecipe(
       Recipe(
@@ -114,7 +88,7 @@ class RecipeListController extends StateController<RecipeListState> {
   }
 
   Future<void> addRecipe() async {
-    await Get.toNamed(Routes.ADD_RECIPES);
+    await Get.toNamed(Routes.ADD_RECIPE);
     var recipesOverview = repository.getRecipes();
     var newState = GetStatus<RecipeListState>.success(
       RecipeListState(recipesOverview),
@@ -211,11 +185,13 @@ class RecipeListController extends StateController<RecipeListState> {
     _refreshData(recipes);
   }
 
-  void goToDetails(int recipeId) {
-    Get.toNamed(
-      Routes.RECIPES_DETAILS,
+  Future<void> goToDetails(int recipeId) async {
+    await Get.toNamed(
+      Routes.RECIPE_DETAILS,
       parameters: {"recipeId": recipeId.toString()},
     );
+
+    fetchData();
   }
 
   void _refreshData(List<RecipeOverview> recipes) {

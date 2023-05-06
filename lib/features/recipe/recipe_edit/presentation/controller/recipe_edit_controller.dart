@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/ingredients_form.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/preview_form.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/steps_form.dart';
-import '../../data/repository/recipe_creation_repository.dart';
-import '../../models/ingredient.dart';
-import '../../models/recipe.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/models/ingredient.dart';
+import 'package:grocery_list/features/recipe/recipe_creation/models/recipe.dart';
+import 'package:grocery_list/features/recipe/recipe_edit/data/repository/recipe_edit_repository.dart';
+import 'package:grocery_list/features/recipe/recipe_edit/presentation/widget/ingredients_edit.dart';
+import 'package:grocery_list/features/recipe/recipe_edit/presentation/widget/preview_edit.dart';
+import 'package:grocery_list/features/recipe/recipe_edit/presentation/widget/steps_edit.dart';
 
-class RecipeCreationController extends GetxController
-    with GetSingleTickerProviderStateMixin {
-  RecipeCreationRepository repository = Get.find();
+class RecipeEditController extends GetxController {
+  RecipeEditRepository repository = Get.find<RecipeEditRepository>();
 
-  Map<String, Widget> tabs = {
-    'Preview': const PreviewForm(),
-    'Ingredients': const IngredientsForm(),
-    'Steps': const StepsForm(),
+  final Map<String, Widget> tabs = {
+    "Preview": const PreviewEdit(),
+    "Ingredients": const IngredientsEdit(),
+    "Steps": const StepsEdit(),
   };
+
+  late Recipe recipeDetails;
 
   List<String> errors = [];
   late TabController tabController;
@@ -39,10 +40,23 @@ class RecipeCreationController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(vsync: this, length: 3);
+    var recipeIdParameter = Get.parameters["recipeId"];
+    if (recipeIdParameter == null) {
+      Get.back();
+    }
+    var recipeId = int.parse(recipeIdParameter!);
+    recipeDetails = repository.getRecipeDetails(recipeId);
+    _initEditForm();
   }
 
-  Future<void> addRecipe(GlobalKey<FormBuilderState> formKey) async {
+  _initEditForm() {
+    nameEditingController.text = name$.value = recipeDetails.name;
+    tags$.value = recipeDetails.tags;
+    steps$.value = recipeDetails.steps;
+    ingredients$.value = recipeDetails.ingredients;
+  }
+
+  Future<void> updateRecipe(GlobalKey<FormBuilderState> formKey) async {
     if (!formKey.currentState!.validate()) {
       Get.dialog(
         AlertDialog(
@@ -65,19 +79,18 @@ class RecipeCreationController extends GetxController
       return;
     }
 
-    var newRecipe = Recipe(
-      id: UniqueKey().hashCode,
+    var recipeToUpdate = recipeDetails.copyWith(
       name: name$.value,
       steps: steps$.value,
       ingredients: ingredients$.value,
       tags: tags$.value,
     );
 
-    await repository.addRecipe(newRecipe);
-    backToRecipeList();
+    repository.update(recipeDetails.key, recipeToUpdate);
+    backToRecipeDetails();
   }
 
-  void backToRecipeList() {
+  void backToRecipeDetails() {
     Get.back();
   }
 

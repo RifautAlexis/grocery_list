@@ -133,15 +133,15 @@ class __$$_RecipeCopyWithImpl<$Res>
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       steps: null == steps
-          ? _value._steps
+          ? _value.steps
           : steps // ignore: cast_nullable_to_non_nullable
               as List<String>,
       ingredients: null == ingredients
-          ? _value._ingredients
+          ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
               as List<Ingredient>,
       tags: null == tags
-          ? _value._tags
+          ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -155,13 +155,10 @@ class _$_Recipe extends _Recipe with DiagnosticableTreeMixin {
   _$_Recipe(
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
-      @HiveField(2) required final List<String> steps,
-      @HiveField(3) required final List<Ingredient> ingredients,
-      @HiveField(4) required final List<String> tags})
-      : _steps = steps,
-        _ingredients = ingredients,
-        _tags = tags,
-        super._();
+      @HiveField(2) required this.steps,
+      @HiveField(3) required this.ingredients,
+      @HiveField(4) required this.tags})
+      : super._();
 
   factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
       _$$_RecipeFromJson(json);
@@ -172,32 +169,15 @@ class _$_Recipe extends _Recipe with DiagnosticableTreeMixin {
   @override
   @HiveField(1)
   final String name;
-  final List<String> _steps;
   @override
   @HiveField(2)
-  List<String> get steps {
-    if (_steps is EqualUnmodifiableListView) return _steps;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_steps);
-  }
-
-  final List<Ingredient> _ingredients;
+  final List<String> steps;
   @override
   @HiveField(3)
-  List<Ingredient> get ingredients {
-    if (_ingredients is EqualUnmodifiableListView) return _ingredients;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingredients);
-  }
-
-  final List<String> _tags;
+  final List<Ingredient> ingredients;
   @override
   @HiveField(4)
-  List<String> get tags {
-    if (_tags is EqualUnmodifiableListView) return _tags;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tags);
-  }
+  final List<String> tags;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -223,10 +203,10 @@ class _$_Recipe extends _Recipe with DiagnosticableTreeMixin {
             other is _$_Recipe &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._steps, _steps) &&
+            const DeepCollectionEquality().equals(other.steps, steps) &&
             const DeepCollectionEquality()
-                .equals(other._ingredients, _ingredients) &&
-            const DeepCollectionEquality().equals(other._tags, _tags));
+                .equals(other.ingredients, ingredients) &&
+            const DeepCollectionEquality().equals(other.tags, tags));
   }
 
   @JsonKey(ignore: true)
@@ -235,9 +215,9 @@ class _$_Recipe extends _Recipe with DiagnosticableTreeMixin {
       runtimeType,
       id,
       name,
-      const DeepCollectionEquality().hash(_steps),
-      const DeepCollectionEquality().hash(_ingredients),
-      const DeepCollectionEquality().hash(_tags));
+      const DeepCollectionEquality().hash(steps),
+      const DeepCollectionEquality().hash(ingredients),
+      const DeepCollectionEquality().hash(tags));
 
   @JsonKey(ignore: true)
   @override

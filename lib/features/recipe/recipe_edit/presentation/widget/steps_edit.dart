@@ -3,21 +3,47 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'package:grocery_list/features/recipe/recipe_details/presentation/controller/recipe_details_controller.dart';
+import 'package:grocery_list/features/recipe/recipe_edit/presentation/controller/recipe_edit_controller.dart';
 
-class StepsDetails extends GetView<RecipeDetailsController> {
-  const StepsDetails({super.key});
+class StepsEdit extends GetView<RecipeEditController> {
+  const StepsEdit({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SingleChildScrollView(
-        child: Column(
+    return SingleChildScrollView(
+      child: Obx(
+        () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            TextFormField(
+              controller: controller.stepEditingController,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.send,
+              maxLines: 2,
+              decoration: const InputDecoration(
+                hintText: "Enter a step",
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 10.0,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                ),
+              ),
+              onFieldSubmitted: (value) => controller.submitStep(value),
+              onTapOutside: (event) => FocusScope.of(context).unfocus(),
+              validator: (value) => controller.stepValidator(),
+            ),
+            const SizedBox(
+              height: 25.0,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ...controller.recipeDetails$.value!.steps
+                ...controller.steps$
                     .mapIndexed(
                       (index, step) => _buildStep(step, index),
                     )
@@ -50,6 +76,7 @@ class StepsDetails extends GetView<RecipeDetailsController> {
         ),
       ),
       direction: DismissDirection.endToStart,
+      onDismissed: (direction) => controller.removeStep(index),
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 10.0,
