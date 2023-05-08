@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:grocery_list/features/recipe/recipe_creation/recipe_creation_binding.dart';
 import 'package:grocery_list/features/recipe/recipe_creation/presentation/view/recipe_creation_page.dart';
-import 'package:grocery_list/features/recipe/recipe_details/presentation/controller/recipe_details_controller.dart';
 import 'package:grocery_list/features/recipe/recipe_details/presentation/view/recipe_details_page.dart';
 import 'package:grocery_list/features/recipe/recipe_details/recipe_details_binding.dart';
 import 'package:grocery_list/features/recipe/recipe_edit/presentation/view/recipe_edit_page.dart';

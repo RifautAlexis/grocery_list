@@ -17,8 +17,10 @@ Future<void> main() async {
 }
 
 Future<void> initService() async {
+  // ignore: avoid_print
   print('Starting services...');
   var hiveDbService = await HiveDbService().init();
   Get.put<HiveDbService>(hiveDbService, permanent: true);
+  // ignore: avoid_print
   print('All services started...');
 }

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/models/ingredient.dart';
 import 'package:grocery_list/features/recipe/recipe_creation/models/recipe.dart';
 import 'package:grocery_list/features/recipe/recipe_details/data/recipe_details_repository.dart';
 import 'package:grocery_list/features/recipe/recipe_details/presentation/widgets/ingredients_details.dart';
 import 'package:grocery_list/features/recipe/recipe_details/presentation/widgets/preview_details.dart';
 import 'package:grocery_list/features/recipe/recipe_details/presentation/widgets/steps_details.dart';
-import 'package:grocery_list/features/recipe/recipe_list/models/recipe_overview.dart';
 import '../../../../../routes/app_pages.dart';
-import '../../../../grocery/grocery_list/models/grocery.dart';
-import '../../../../grocery/grocery_list/presentation/controllers/grocery_list_controller.dart';
-import 'dart:convert';
-import 'dart:io';
 
 class RecipeDetailsController extends GetxController {
   RecipeDetailsController();

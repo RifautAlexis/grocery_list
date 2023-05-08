@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
-import 'package:collection/collection.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/ingredients_form.dart';
 import 'package:grocery_list/features/recipe/widget/keep_alive_wrapper.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/preview_form.dart';
-import 'package:grocery_list/features/recipe/recipe_creation/presentation/widgets/steps_form.dart';
 
 class RecipeScaffoldPage extends StatefulWidget {
   const RecipeScaffoldPage({

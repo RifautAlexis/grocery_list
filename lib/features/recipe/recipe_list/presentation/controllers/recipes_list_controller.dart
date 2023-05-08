@@ -127,6 +127,7 @@ class RecipeListController extends StateController<RecipeListState> {
       repository.addRecipes(newRecipes);
       fetchData();
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }

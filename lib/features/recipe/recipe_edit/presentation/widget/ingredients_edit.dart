@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'package:grocery_list/features/recipe/recipe_creation/models/ingredient.dart';
-import 'package:grocery_list/features/recipe/recipe_details/presentation/controller/recipe_details_controller.dart';
 import 'package:grocery_list/features/recipe/recipe_edit/presentation/controller/recipe_edit_controller.dart';
 
 class IngredientsEdit extends GetView<RecipeEditController> {

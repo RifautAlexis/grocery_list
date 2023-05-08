@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:collection/collection.dart';
 
 import '../../models/ingredient.dart';
-import '../../models/recipe.dart';
 import '../controller/recipe_creation_controller.dart';
 
 class IngredientsForm extends GetView<RecipeCreationController> {
