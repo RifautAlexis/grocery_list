@@ -5,4 +5,8 @@ Allow to register recipe, share it, and easily add ingredient to the grocery lis
 
 # Commands
 Generate for Freezed and HiveDB : flutter pub run build_runner build --delete-conflicting-outputs
+
 Analyze project based on lint rules : dart analyze
+
+Building project : flutter build apk
+Where to find apk ? build/app/outputs/apk/release/app-release.apk
