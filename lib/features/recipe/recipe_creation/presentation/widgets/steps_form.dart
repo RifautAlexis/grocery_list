@@ -10,48 +10,49 @@ class StepsForm extends GetView<RecipeCreationController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Obx(
-        () => Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: controller.stepEditingController,
-              keyboardType: TextInputType.multiline,
-              textInputAction: TextInputAction.send,
-              maxLines: 2,
-              decoration: const InputDecoration(
-                hintText: "Enter a step",
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 10.0,
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.redAccent),
-                ),
+    return Obx(
+      () => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          TextFormField(
+            controller: controller.stepEditingController,
+            keyboardType: TextInputType.multiline,
+            textInputAction: TextInputAction.send,
+            maxLines: 2,
+            decoration: const InputDecoration(
+              hintText: "Enter a step",
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 10.0,
               ),
-              onFieldSubmitted: (value) => controller.submitStep(value),
-              onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              validator: (value) => controller.stepValidator(),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(width: 1),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.redAccent),
+              ),
             ),
-            const SizedBox(
-              height: 25.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            onFieldSubmitted: (value) => controller.submitStep(value),
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+            validator: (value) => controller.stepValidator(),
+          ),
+          const SizedBox(
+            height: 25.0,
+          ),
+          Expanded(
+            child: ReorderableListView(
+              shrinkWrap: true,
+              onReorder: (oldIndex, newIndex) =>
+                  controller.reorderSteps(oldIndex, newIndex),
               children: [
-                ...controller.steps$
-                    .mapIndexed(
-                      (index, step) => _buildStep(step, index),
-                    )
-                    .toList(),
+                ...controller.steps$.mapIndexed(
+                  (index, element) =>
+                      _buildStep(controller.steps$.value[index], index),
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

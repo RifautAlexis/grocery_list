@@ -202,4 +202,18 @@ class RecipeCreationController extends GetxController
 
     return null;
   }
+
+  reorderSteps(int oldIndex, int newIndex) {
+    var itemToMove = steps$.value[oldIndex];
+
+    steps$.value.removeAt(oldIndex);
+
+    if (steps$.value.length <= newIndex) {
+      steps$.value.add(itemToMove);
+    } else {
+      steps$.value.insert(newIndex, itemToMove);
+    }
+
+    steps$.refresh();
+  }
 }
