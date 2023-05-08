@@ -25,58 +25,6 @@ class RecipeListController extends StateController<RecipeListState> {
   @override
   void onInit() {
     super.onInit();
-    repository.addRecipe(
-      Recipe(
-        id: UniqueKey().hashCode,
-        name: "Recipe01",
-        steps: [
-          "Cut ingredients",
-          "Add what you just cut",
-          "Cook them",
-        ],
-        ingredients: [
-          Ingredient(name: "Celery", quantity: 5),
-          Ingredient(name: "Beef", quantity: 2),
-          Ingredient(name: "Ketchup", quantity: 1),
-        ],
-        tags: ["meat", "vegetables", "under 15 mins"],
-      ),
-    );
-    repository.addRecipe(
-      Recipe(
-        id: UniqueKey().hashCode,
-        name: "Recipe02",
-        steps: [
-          "Cook",
-        ],
-        ingredients: [
-          Ingredient(name: "Potato", quantity: 10),
-          Ingredient(name: "Chiken", quantity: 3),
-          Ingredient(name: "Milk", quantity: 1),
-          Ingredient(name: "Bread", quantity: 1),
-        ],
-        tags: ["meat", "under 30 mins"],
-      ),
-    );
-    repository.addRecipe(
-      Recipe(
-        id: UniqueKey().hashCode,
-        name: "Recipe03",
-        steps: [
-          "Cut ingredients",
-          "Add what you just cut",
-          "Cook them",
-          "Serve in plates",
-          "Make a wish",
-        ],
-        ingredients: [
-          Ingredient(name: "Celery", quantity: 5),
-          Ingredient(name: "Salad", quantity: 2),
-          Ingredient(name: "Tomato", quantity: 1)
-        ],
-        tags: ["Vegan", "vegetables"],
-      ),
-    );
 
     searchInputController.addListener(() {
       searchInput.value = searchInputController.text;

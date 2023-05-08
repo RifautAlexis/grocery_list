@@ -13,12 +13,6 @@ class GroceryListController extends StateController<GroceryListState> {
   void onInit() {
     super.onInit();
 
-    repository.hiveDB.groceryBox.addAll([
-      Grocery(name: "Celery", quantity: 3),
-      Grocery(name: "Banana", quantity: 5),
-      Grocery(name: "Bread", quantity: 1),
-    ]);
-
     fetchData();
   }
 
