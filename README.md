@@ -17,3 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 
 # Commands
 Generate for Freezed and HiveDB : flutter pub run build_runner build --delete-conflicting-outputs
+Analyze project based on lint rules : dart analyze
